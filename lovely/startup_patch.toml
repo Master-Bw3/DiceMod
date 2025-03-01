@@ -1,0 +1,38 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+# Define a var substitution rule. This searches for lines that contain {{lovely:var_name}}
+# (var_name from this example, it can really be anything) and replaces each match with the
+# provided value.
+# This example would transform print('{{lovely:var_name}}') to print('Hello world!').
+#
+# USEFUL: For when you want to reduce the complexity of repetitive injections, eg. embedding
+# release version numbers in multiple locations.
+[vars]
+var_name = "Hello world!"
+
+# Inject one or more lines of code before, after, or at (replacing) a line which matches
+# the provided pattern.
+#
+# USEFUL: For when you need to add / modify a small amount of code to setup initialization
+# routines, etc.
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "boot_timer('splash prep', 'end',1)"
+position = "after"
+payload = '''
+'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "G.playing_cards = {}"
+position = "after"
+payload = '''
+'''
+match_indent = true
+times = 1
