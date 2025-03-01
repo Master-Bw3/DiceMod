@@ -23,6 +23,7 @@ target = "functions/common_events.lua"
 pattern = "if G.STAGE == G.STAGES.RUN then"
 position = "after"
 payload = '''
+DICEMOD:set_screen_positions()
 '''
 match_indent = true
 times = 1

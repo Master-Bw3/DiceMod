@@ -33,6 +33,7 @@ target = "game.lua"
 pattern = "G.playing_cards = {}"
 position = "after"
 payload = '''
+DICEMOD:set_up_ui()
 '''
 match_indent = true
 times = 1
