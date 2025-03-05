@@ -16,10 +16,11 @@ Dice.ONE = {
     config = {},
     key = "one",
     atlas = "dicy_Dice",
+    dice_value = 1;
 }
 
 G.FUNCS.use_die = function(e, mute, nosave)
-    print("hey there")
+    e.config.ref_table:use_die()
 end
 
 G.FUNCS.can_use_die = function(e, mute, nosave)
@@ -52,7 +53,27 @@ function Die(card)
     end
 
     card.can_use_die = function(self)
-        return true
+        if #G.hand.highlighted == 1 then
+            local card = G.hand.highlighted[1]
+            if (card.diceAbility) then
+                return #card.diceAbility.dice < card.diceAbility.slot_count
+            end
+        end
+        
+        return false
+    end
+
+
+    card.use_die = function(self)
+        self:start_dissolve()
+
+        local card = G.hand.highlighted[1]
+
+
+        local sprite = Sprite(card.T.x, card.T.y, Dice.width(), Dice.width(), G.ASSET_ATLAS[self.config.center.atlas], self.config.center.pos)
+        sprite:set_role({major = card, role_type = 'Minor', draw_major = card})
+
+        table.insert(card.diceAbility.dice, {value = self.config.center.dice_value, sprite = sprite})
     end
 
     return card
