@@ -7,13 +7,12 @@
 	"description": "",
 	"prefix": "dicy",
 	"main_file": "src/dice_mod.lua",
-	"priority": 0,
 	"badge_colour": "FF230A",
 	"badge_text_colour": "ABC123",
 	"display_name": "⚄",
 	"version": "1.0.0",
 	"dependencies": [
-		"Steamodded (>=1.0.0~ALPHA-1326a)",
+		"Steamodded (>=1.0.0~BETA-0302d)",
 		"Lovely (>=0.6)"
 	],
 	"conflicts": [],

@@ -3,6 +3,7 @@
         "SMODS",
         "CardArea",
         "G",
-        "Card"
+        "Card",
+        "Sprite"
     ]
 }

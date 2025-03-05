@@ -1,5 +1,6 @@
 assert(SMODS.load_file('src/dice.lua'))()
 assert(SMODS.load_file('src/dice_tray.lua'))()
+assert(SMODS.load_file('src/dice_ability.lua'))()
 
 
 if not DICEMOD then DICEMOD = {} end
@@ -11,6 +12,15 @@ SMODS.Atlas({
     px = 31,
     py = 31
 }):register()
+
+SMODS.Atlas({
+    key = "DiceAbilities",
+    path = "dice_abilities.png",
+    px = 71,
+    py = 95
+}):register()
+
+
 
 function DICEMOD:set_up_ui()
     self.dice_tray = DiceTray(CardArea(
@@ -35,6 +45,18 @@ SMODS.Keybind({
             print(dice.ability.consumeable)
 
             DICEMOD.dice_tray:emplace(dice)
+        end
+    end
+})
+
+SMODS.Keybind({
+    key_pressed = "o",
+    action = function(e)
+        print("o pressed")
+        if (G.STATE == G.STATES.SELECTING_HAND) then
+            local card = G.hand.cards[1]
+
+            DiceAbility.add_to_card(card, DiceAbility.ONE)
         end
     end
 })
