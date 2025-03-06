@@ -20,7 +20,12 @@ SMODS.Atlas({
     py = 95
 }):register()
 
-
+SMODS.Atlas({
+    key = "DiceOnCards",
+    path = "dice_on_cards.png",
+    px = 71,
+    py = 95
+}):register()
 
 function DICEMOD:set_up_ui()
     self.dice_tray = DiceTray(CardArea(

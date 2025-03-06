@@ -70,7 +70,7 @@ function Die(card)
         local card = G.hand.highlighted[1]
 
 
-        local sprite = Sprite(card.T.x, card.T.y, Dice.width(), Dice.width(), G.ASSET_ATLAS[self.config.center.atlas], self.config.center.pos)
+        local sprite = Sprite(card.T.x, card.T.y, Dice.width(), Dice.width(), G.ASSET_ATLAS["dicy_DiceOnCards"], {x = self.config.center.dice_value - 1, y = #card.diceAbility.dice})
         sprite:set_role({major = card, role_type = 'Minor', draw_major = card})
 
         table.insert(card.diceAbility.dice, {value = self.config.center.dice_value, sprite = sprite})
