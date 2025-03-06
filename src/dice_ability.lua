@@ -24,6 +24,12 @@ DiceAbility.ONE = {
     slot_count = 3
 }
 
+DiceAbility.PLACEMENT_MAP = {
+    [1] = {1},
+    [2] = {0, 2},
+    [3] = {0, 1, 2}
+}
+
 function DiceAbility.add_to_card(card, ability)
     card.diceAbility = {
         slot_count = ability.slot_count,
