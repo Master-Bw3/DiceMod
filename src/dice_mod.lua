@@ -82,20 +82,13 @@ local function reroll_dice()
     -- roll new die
     local i = 0
     while (i < DICEMOD.dice_tray.config.card_limit) do
-        local dice = Die(math.random(1, 6))
-        G.E_MANAGER:add_event(Event({
-            trigger = "after", 
-            delay = 0.1, 
-            func = function() 
-                DICEMOD.dice_tray:emplace(dice)
-                return true 
-            end
-        }))
+        local die = Die(math.random(1, 6))
+        DICEMOD.dice_tray:emplace(die)
+
 
         i = i + 1
     end
 end
-
 
 
 
