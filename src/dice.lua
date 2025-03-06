@@ -4,19 +4,10 @@ function Dice.width()
     return G.CARD_W / 2
 end
 
-Dice.ONE = {
-    order = 0,
-    unlocked = true,
-    start_alerted = true,
-    available = true,
-    discovered = true,
-    name = "One",
-    pos = { x = 0, y = 0 },
-    set = "Dice",
-    config = {},
-    key = "one",
-    atlas = "dicy_Dice",
-    dice_value = 1;
+
+
+Dice.NAMES = {
+    "One", "Two", "Three", "Four", "Five", "Six"
 }
 
 G.FUNCS.use_die = function(e, mute, nosave)
@@ -33,7 +24,25 @@ G.FUNCS.can_use_die = function(e, mute, nosave)
     end
 end
 
-function Die(card)
+function Die(value)
+
+    local center = {
+        order = 0,
+        unlocked = true,
+        start_alerted = true,
+        available = true,
+        discovered = true,
+        pos = { x = value - 1, y = 0 },
+        set = "Dice",
+        config = {},
+        atlas = "dicy_Dice",
+        name = Dice.NAMES[value],
+        key = string.lower(Dice.NAMES[value]),
+        dice_value = value
+    }
+
+    local card = Card(DICEMOD.dice_tray.T.x, DICEMOD.dice_tray.T.y, Dice.width(), Dice.width(), G.P_CARDS.empty, center)
+
     card.highlight = function(self, is_higlighted)
         Card.highlight(self, is_higlighted)
 

@@ -41,12 +41,13 @@ function DICEMOD:set_screen_positions()
     self.dice_tray:hard_set_VT()
 end
 
+
 SMODS.Keybind({
     key_pressed = "i",
     action = function(e)
         print("i pressed")
         if (G.STATE == G.STATES.SELECTING_HAND) then
-            local dice = Die(Card(DICEMOD.dice_tray.T.x, DICEMOD.dice_tray.T.y, Dice.width(), Dice.width(), G.P_CARDS.empty, Dice.ONE))
+            local dice = Die(math.random(1, 6))
             print(dice.ability.consumeable)
 
             DICEMOD.dice_tray:emplace(dice)
@@ -70,3 +71,53 @@ SMODS.Keybind({
     key_pressed = "m",
     action = SMODS.restart_game
 })
+
+
+local function reroll_dice()
+    --- roll dice ---
+
+    -- remove dice
+    remove_all(DICEMOD.dice_tray.cards)
+
+    -- roll new die
+    local i = 0
+    while (i < DICEMOD.dice_tray.config.card_limit) do
+        local dice = Die(math.random(1, 6))
+        G.E_MANAGER:add_event(Event({
+            trigger = "after", 
+            delay = 0.1, 
+            func = function() 
+                DICEMOD.dice_tray:emplace(dice)
+                return true 
+            end
+        }))
+
+        i = i + 1
+    end
+end
+
+
+
+
+local fn = Game.update_selecting_hand
+Game.update_selecting_hand = function(self, dt)
+	fn(self, dt)
+
+	if not G.GAME.current_round.rolled_dice then reroll_dice() end
+    G.GAME.current_round.rolled_dice = true;
+end
+
+local fn2 = Game.update_hand_played
+Game.update_hand_played = function(self, dt)
+	fn2(self, dt)
+
+    G.GAME.current_round.rolled_dice = false;
+end
+
+-- local fn1 = new_round
+-- new_round = function(e)
+-- 	fn1()
+	
+--     reroll_dice()
+-- end
+
