@@ -5,10 +5,29 @@ function Dice.width()
 end
 
 
-
 Dice.NAMES = {
     "One", "Two", "Three", "Four", "Five", "Six"
 }
+
+local i = 1
+while i <= 6 do
+    G.P_CENTERS["d_"..string.lower(Dice.NAMES[i])] = {
+        order = i - 1,
+        unlocked = true,
+        start_alerted = true,
+        available = true,
+        discovered = true,
+        pos = { x = i - 1, y = 0 },
+        set = "Dice",
+        config = {},
+        atlas = "dicy_Dice",
+        name = Dice.NAMES[i],
+        key = "d_"..string.lower(Dice.NAMES[i]),
+        dice_value = i
+    }
+    i = i + 1
+end
+
 
 G.FUNCS.use_die = function(e, mute, nosave)
     e.config.ref_table:use_die()
@@ -26,20 +45,7 @@ end
 
 function Die(value)
 
-    local center = {
-        order = 0,
-        unlocked = true,
-        start_alerted = true,
-        available = true,
-        discovered = true,
-        pos = { x = value - 1, y = 0 },
-        set = "Dice",
-        config = {},
-        atlas = "dicy_Dice",
-        name = Dice.NAMES[value],
-        key = string.lower(Dice.NAMES[value]),
-        dice_value = value
-    }
+    local center = G.P_CENTERS["d_"..string.lower(Dice.NAMES[value])]
 
     local card = Card(DICEMOD.dice_tray.T.x, DICEMOD.dice_tray.T.y, Dice.width(), Dice.width(), G.P_CARDS.empty, center)
 
@@ -92,6 +98,7 @@ function Die(value)
 
         table.insert(card.diceAbility.dice, {value = self.config.center.dice_value, sprite = sprite})
     end
+
 
     return card
 end

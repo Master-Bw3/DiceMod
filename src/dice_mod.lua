@@ -33,6 +33,8 @@ function DICEMOD:set_up_ui()
         0.95 * (Dice.width()), 4 * (Dice.width()),
         { card_limit = 4, type = 'joker' }
     ))
+    -- for saving / loading to work
+    G.dice_tray = self.dice_tray
 end
 
 function DICEMOD:set_screen_positions()

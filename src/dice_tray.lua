@@ -25,7 +25,7 @@ function DiceTray(cardarea)
         else
             desired_x = G.TILE_W + 3
         end
-        cardarea.T.x = 5*G.real_dt*desired_x + (1-5*G.real_dt)*cardarea.T.x
+        cardarea.T.x = 8*G.real_dt*desired_x + (1-8*G.real_dt)*cardarea.T.x
         if math.abs(desired_x - cardarea.T.x) < 0.01 then cardarea.T.x = desired_x end
         if G.STATE == G.STATES.TUTORIAL then 
             G.play.T.x = cardarea.T.x - (3 + 0.6)
@@ -33,6 +33,27 @@ function DiceTray(cardarea)
         Moveable.move(self, dt)
         self:align_cards()
     end
+
+    cardarea.load = function(self, values)
+
+        for i, v in ipairs(values) do
+            local die = Die(v)
+            self:emplace(die)
+        end
+    end
+
+    cardarea.save = function(self)
+        if not self.cards then return end
+     
+    
+        local values = {}
+        for i, v in ipairs(self.cards) do
+            values[i] = v.config.center.dice_value
+        end
+
+        return values
+    end
+
 
     return cardarea
 end
