@@ -23,9 +23,6 @@ function DiceTray(cardarea)
 
         self.T.y = 15*G.real_dt*desired_y + (1-15*G.real_dt) * self.T.y
         if math.abs(desired_y - self.T.y) < 0.01 then self.T.y = desired_y end
-        if G.STATE == G.STATES.TUTORIAL then 
-            G.play= cardarea- (3 + 0.6)
-        end
         Moveable.move(self, dt)
         self:align_cards()
     end

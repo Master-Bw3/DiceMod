@@ -71,7 +71,7 @@ SMODS.Keybind({
         if (G.STATE == G.STATES.SELECTING_HAND) then
             local card = G.hand.cards[1]
 
-            DiceAbility.add_to_card(card, DiceAbility.ONE)
+            DiceAbility.add_to_card(card, DiceAbility.ILLUMINATE)
         end
     end
 })
@@ -92,6 +92,20 @@ local function reroll_dice()
 
 
         i = i + 1
+    end
+
+    if G.GAME.current_round.extra_dice then
+        for i, value in ipairs(G.GAME.current_round.extra_dice) do
+            local die = Die(value)
+            DICEMOD.dice_tray:emplace(die)
+        end
+        G.GAME.current_round.extra_dice = nil
+    end
+
+    for i, card in ipairs(G.hand.cards) do
+        if (card.diceAbility) then
+            card.diceAbility.dice = {}
+        end
     end
 end
 
@@ -119,3 +133,15 @@ end
 --     reroll_dice()
 -- end
 
+local ec = eval_card
+function eval_card(card, context) 
+    local ret = ec(card, context)
+
+
+    if context.cardarea == G.play and context.main_scoring and card.diceAbility and card.diceAbility:conditions_met() then
+        print("hey")
+        card.diceAbility:apply_ability(ret)
+    end
+
+    return ret
+end
