@@ -30,17 +30,24 @@ SMODS.Atlas({
 function DICEMOD:set_up_ui()
     self.dice_tray = DiceTray(CardArea(
         0, 0,
-        0.95 * (Dice.width()), 4 * (Dice.width()),
+        4 * (Dice.width()), 0.95 * (Dice.width()),
         { card_limit = 4, type = 'joker' }
     ))
     -- for saving / loading to work
     G.dice_tray = self.dice_tray
 end
 
-function DICEMOD:set_screen_positions()
-    self.dice_tray.T.x = G.TILE_W - self.dice_tray.T.w - 0.2
-    self.dice_tray.T.y = G.TILE_H - self.dice_tray.T.h - 4
-    self.dice_tray:hard_set_VT()
+local ssp = set_screen_positions
+function set_screen_positions()
+    ssp()
+    if G.STAGE == G.STAGES.RUN then
+        G.deck.T.y = G.TILE_H - G.deck.T.h - 1.8
+        G.deck.T.x = G.TILE_W - G.deck.T.w
+
+        DICEMOD.dice_tray.T.x = G.TILE_W - DICEMOD.dice_tray.T.w
+        DICEMOD.dice_tray.T.y = G.TILE_H - DICEMOD.dice_tray.T.h
+        DICEMOD.dice_tray:hard_set_VT()
+    end
 end
 
 

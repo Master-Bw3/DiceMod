@@ -53,16 +53,15 @@ function Die(value)
         Card.highlight(self, is_higlighted)
 
         self.children.use_button = UIBox {
-            definition = { n = G.UIT.C, config = { align = "cr" }, nodes = {
+            definition = { n = G.UIT.C, config = { align = "cm" }, nodes = {
 
-                { n = G.UIT.C, config = { ref_table = card, align = "cr", maxw = 1.25, padding = 0.1, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_die', func = 'can_use_die' }, nodes = {
-                    { n = G.UIT.B, config = { w = 0.1, h = 0.6 } },
+                { n = G.UIT.C, config = { ref_table = card, align = "cm", padding = 0.1, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_die', func = 'can_use_die' }, nodes = {
                     { n = G.UIT.T, config = { text = localize('b_use'), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true } }
                 } }
             } },
 
-            config = { align = "cr",
-                offset = { x = -0.4, y = 0 },
+            config = { align = "bm",
+                offset = { x = 0, y = 0 },
                 parent = self }
         }
     end
