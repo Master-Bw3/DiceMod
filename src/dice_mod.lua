@@ -74,12 +74,8 @@ SMODS.Keybind({
 
 
 local function reroll_dice()
-    --- roll dice ---
-
-    -- remove dice
     remove_all(DICEMOD.dice_tray.cards)
 
-    -- roll new die
     local i = 0
     while (i < DICEMOD.dice_tray.config.card_limit) do
         local die = Die(math.random(1, 6))
@@ -92,8 +88,8 @@ end
 
 
 
-local fn = Game.update_selecting_hand
-Game.update_selecting_hand = function(self, dt)
+local fn = Game.update_draw_to_hand
+Game.update_draw_to_hand = function(self, dt)
 	fn(self, dt)
 
 	if not G.GAME.current_round.rolled_dice then reroll_dice() end
@@ -103,7 +99,7 @@ end
 local fn2 = Game.update_hand_played
 Game.update_hand_played = function(self, dt)
 	fn2(self, dt)
-
+    
     G.GAME.current_round.rolled_dice = false;
 end
 

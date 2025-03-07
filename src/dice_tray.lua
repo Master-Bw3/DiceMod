@@ -19,8 +19,13 @@ function DiceTray(cardarea)
 
 
     cardarea.move = function(self, dt)
-        local desired_x =G.TILE_W - DICEMOD.dice_tray.T.w - 0.2 + 2*((not G.deck_preview and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND)) and 0 or 1)
-        cardarea.T.x = 15*G.real_dt*desired_x + (1-15*G.real_dt)*cardarea.T.x
+        local desired_x
+        if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND then
+            desired_x = G.TILE_W - DICEMOD.dice_tray.T.w - 0.2 
+        else
+            desired_x = G.TILE_W + 3
+        end
+        cardarea.T.x = 5*G.real_dt*desired_x + (1-5*G.real_dt)*cardarea.T.x
         if math.abs(desired_x - cardarea.T.x) < 0.01 then cardarea.T.x = desired_x end
         if G.STATE == G.STATES.TUTORIAL then 
             G.play.T.x = cardarea.T.x - (3 + 0.6)
